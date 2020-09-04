@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var cameraSource: CameraSource
     private lateinit var barcodeDetector: BarcodeDetector
+    val CAM_REQUEST_CODE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +31,13 @@ class MainActivity : AppCompatActivity() {
         ) {
             askForCameraPermission()
         } else {
-            setupControls()
+            setupCameraScanner()
         }
     }
 
-    private fun setupControls() {
+    private fun setupCameraScanner() {
         barcodeDetector = BarcodeDetector.Builder(this@MainActivity)
+            .setBarcodeFormats(Barcode.QR_CODE)
             .build()
 
         cameraSource = CameraSource.Builder(this@MainActivity, barcodeDetector)
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         ActivityCompat.requestPermissions(
             this@MainActivity,
             arrayOf(Manifest.permission.CAMERA),
-            1001
+            CAM_REQUEST_CODE
         )
     }
 
@@ -60,9 +62,9 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 1001 && grantResults.isNotEmpty()) {
+        if (requestCode == CAM_REQUEST_CODE && grantResults.isNotEmpty()) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                setupControls()
+                setupCameraScanner()
             } else {
                 Toast.makeText(this, "Camera Permission Denied", Toast.LENGTH_SHORT).show()
             }
@@ -86,8 +88,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        override fun surfaceChanged(surfaceHolder: SurfaceHolder?, p1: Int, p2: Int, p3: Int) {
-
+        override fun surfaceChanged(
+            surfaceHolder: SurfaceHolder?,
+            format: Int,
+            width: Int,
+            height: Int
+        ) {
+            Toast.makeText(applicationContext, "", Toast.LENGTH_LONG).show()
         }
 
         override fun surfaceDestroyed(surfaceHolder: SurfaceHolder?) {
