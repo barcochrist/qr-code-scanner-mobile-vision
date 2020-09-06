@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Scanner Mobile Vision</string>
+    <string name="please_scan_qr_code">Por favor escanear Código QR</string>
 </resources>

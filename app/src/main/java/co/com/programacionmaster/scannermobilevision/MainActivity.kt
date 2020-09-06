@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var cameraSource: CameraSource
     private lateinit var barcodeDetector: BarcodeDetector
-    val CAM_REQUEST_CODE = 1
+    private val CAM_REQUEST_CODE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,7 +94,6 @@ class MainActivity : AppCompatActivity() {
             width: Int,
             height: Int
         ) {
-            Toast.makeText(applicationContext, "", Toast.LENGTH_LONG).show()
         }
 
         override fun surfaceDestroyed(surfaceHolder: SurfaceHolder?) {
